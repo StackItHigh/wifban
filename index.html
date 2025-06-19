@@ -500,8 +500,8 @@ body {
         <canvas id="gifCanvas" width="900" height="300"></canvas>
     </div>
 
-    <!-- Modern GIF Library - more reliable -->
-    <script src="https://cdn.jsdelivr.net/npm/modern-gif@1.2.0/dist/modern-gif.min.js"></script>
+    <!-- Reliable GIF Library -->
+    <script src="https://cdn.jsdelivr.net/npm/gif.js.optimized@1.0.1/dist/gif.min.js"></script>
 
     <script>
 class GIFGenerator {
@@ -745,115 +745,91 @@ class GIFGenerator {
         progressContainer.style.display = 'block';
         
         try {
+            // Check if GIF library is available
+            if (typeof GIF === 'undefined') {
+                throw new Error('GIF library not loaded');
+            }
+            
             const duration = parseInt(document.getElementById('gifDuration').value);
             const quality = parseInt(document.getElementById('gifQuality').value);
             
-            statusMessage.textContent = 'Preparing GIF frames...';
+            statusMessage.textContent = 'Initializing GIF generator...';
             
-            // Use Canvas Recording API instead of external library
-            const stream = this.canvas.captureStream(10); // 10 FPS
-            const recorder = new MediaRecorder(stream, {
-                mimeType: 'video/webm;codecs=vp9'
+            // Create GIF with no external worker (to avoid CORS)
+            const gif = new GIF({
+                workers: 1,
+                quality: quality,
+                width: 900,
+                height: 300,
+                repeat: 0, // 0 = loop forever
+                transparent: null,
+                background: '#0052FF'
             });
-            
-            const chunks = [];
-            recorder.ondataavailable = (e) => chunks.push(e.data);
-            
-            recorder.onstop = async () => {
-                const blob = new Blob(chunks, { type: 'video/webm' });
-                
-                // Convert to GIF using canvas frames
-                await this.createGIFFromFrames(duration, quality, progressBar, statusMessage);
-            };
-            
-            // Start recording
-            recorder.start();
-            
-            // Stop after duration
-            setTimeout(() => {
-                recorder.stop();
-            }, duration * 1000);
 
-        } catch (error) {
-            console.error('Error generating GIF:', error);
-            // Fallback to frame-by-frame method
-            await this.createGIFFromFrames(
-                parseInt(document.getElementById('gifDuration').value),
-                parseInt(document.getElementById('gifQuality').value),
-                progressBar,
-                statusMessage
-            );
-        }
-    }
-    
-    async createGIFFromFrames(duration, quality, progressBar, statusMessage) {
-        try {
-            statusMessage.textContent = 'Creating GIF frames...';
-            
-            const frameCount = duration * 8; // 8 FPS for smaller file
-            const frames = [];
-            
-            // Capture frames
+            const frameCount = Math.min(duration * 8, 80); // Limit frames to prevent timeout
+            const frameDelay = Math.max(125, 1000 / 8); // 8 FPS minimum
+
+            statusMessage.textContent = `Capturing ${frameCount} frames...`;
+
+            // Capture all frames first
             for (let i = 0; i < frameCount; i++) {
                 await this.captureFrame(i, frameCount);
                 
-                // Convert canvas to image data
-                const imageData = this.canvas.toDataURL('image/png');
-                frames.push(imageData);
+                // Add frame to GIF
+                gif.addFrame(this.canvas.getContext('2d'), { 
+                    delay: frameDelay,
+                    copy: true 
+                });
                 
-                const progress = ((i + 1) / frameCount) * 50; // First 50% for capture
+                const progress = ((i + 1) / frameCount) * 70; // 70% for capture
                 progressBar.style.width = progress + '%';
                 statusMessage.textContent = `Capturing frame ${i + 1}/${frameCount}...`;
                 
-                await new Promise(resolve => setTimeout(resolve, 20));
+                // Small delay to prevent browser freeze
+                await new Promise(resolve => setTimeout(resolve, 10));
             }
-            
-            statusMessage.textContent = 'Converting to GIF...';
-            
-            // Create GIF using simple approach
-            const gifBlob = await this.createSimpleGIF(frames, progressBar);
-            
-            this.generatedGIF = gifBlob;
-            const fileSize = (gifBlob.size / 1024 / 1024).toFixed(2);
-            
-            document.getElementById('fileSize').textContent = `Size: ${fileSize} MB`;
-            document.getElementById('fileInfo').style.display = 'block';
-            
-            statusMessage.textContent = 'GIF generated successfully!';
-            document.getElementById('generateBtn').disabled = false;
-            document.getElementById('generateBtn').textContent = '🎬 Generate GIF';
-            document.getElementById('progressContainer').style.display = 'none';
-            
+
+            statusMessage.textContent = 'Rendering GIF... Please wait...';
+            progressBar.style.width = '80%';
+
+            // Set up completion handler
+            gif.on('finished', (blob) => {
+                this.generatedGIF = blob;
+                const fileSize = (blob.size / 1024 / 1024).toFixed(2);
+                
+                document.getElementById('fileSize').textContent = `Size: ${fileSize} MB`;
+                document.getElementById('fileInfo').style.display = 'block';
+                
+                statusMessage.textContent = 'Animated GIF generated successfully!';
+                generateBtn.disabled = false;
+                generateBtn.textContent = '🎬 Generate GIF';
+                progressContainer.style.display = 'none';
+                progressBar.style.width = '100%';
+            });
+
+            gif.on('progress', (progress) => {
+                const renderProgress = 80 + (progress * 20); // 80-100% for rendering
+                progressBar.style.width = renderProgress + '%';
+                statusMessage.textContent = `Rendering GIF... ${Math.round(progress * 100)}%`;
+            });
+
+            gif.on('abort', () => {
+                statusMessage.textContent = 'GIF generation was aborted.';
+                generateBtn.disabled = false;
+                generateBtn.textContent = '🎬 Generate GIF';
+                progressContainer.style.display = 'none';
+            });
+
+            // Start rendering
+            gif.render();
+
         } catch (error) {
-            console.error('Error in createGIFFromFrames:', error);
-            statusMessage.textContent = 'Error generating GIF. Try screen recording instead.';
-            document.getElementById('generateBtn').disabled = false;
-            document.getElementById('generateBtn').textContent = '🎬 Generate GIF';
-            document.getElementById('progressContainer').style.display = 'none';
+            console.error('Error generating GIF:', error);
+            statusMessage.textContent = 'Error: GIF library not available. Try screen recording instead.';
+            generateBtn.disabled = false;
+            generateBtn.textContent = '🎬 Generate GIF';
+            progressContainer.style.display = 'none';
         }
-    }
-    
-    async createSimpleGIF(frames, progressBar) {
-        // Simple GIF creation using canvas and data URLs
-        // This is a basic implementation - for production, you'd want a proper GIF encoder
-        
-        statusMessage.textContent = 'Encoding GIF...';
-        
-        // Create a simple animated data structure
-        const canvas = document.createElement('canvas');
-        canvas.width = 900;
-        canvas.height = 300;
-        const ctx = canvas.getContext('2d');
-        
-        // For now, return the last frame as a static image
-        // In a real implementation, you'd use a proper GIF encoder library
-        const lastFrame = frames[frames.length - 1];
-        const response = await fetch(lastFrame);
-        const blob = await response.blob();
-        
-        progressBar.style.width = '100%';
-        
-        return blob;
     }
 
     async captureFrame(frameIndex, totalFrames) {
