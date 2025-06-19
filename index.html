@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BASE WIF HAIR GIF Generator</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: white;
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 48px;
+    font-weight: 900;
+    color: #0052FF;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header p {
+    font-size: 18px;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+    align-items: start;
+}
+
+.banner-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0px;
+    padding:0px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.banner-container {
+    width: 900px;
+    height: 300px;
+    background: #0052FF;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin: 0 auto 20px;
+    max-width: 100%;
+    animation: blueShift 8s ease-in-out infinite;
+}
+
+@keyframes blueShift {
+    0% { background: #0052FF; }
+    16.66% { background: #1E6BFF; }
+    33.33% { background: #3D84FF; }
+    50% { background: #5C9DFF; }
+    66.66% { background: #3D84FF; }
+    83.33% { background: #1E6BFF; }
+    100% { background: #0052FF; }
+}
+
+/* Animated Logo */
+.animated-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    background-image: url('wiflogo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translateY(-50%) translateX(-50%);
+    animation: logoBounce 2s ease-in-out infinite;
+    z-index: 4;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+/* Fallback logo if wiflogo.png doesn't load */
+.animated-logo.fallback {
+    background: linear-gradient(135deg, #FFFFFF 0%, #E6F0FF 50%, #FFFFFF 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #0052FF;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+}
+
+@keyframes logoBounce {
+    0%, 100% {
+        transform: translateY(-50%) translateX(-50%) scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    }
+    25% {
+        transform: translateY(-60%) translateX(-50%) scale(1.1);
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+    }
+    50% {
+        transform: translateY(-50%) translateX(-50%) scale(1.05);
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
+    }
+    75% {
+        transform: translateY(-40%) translateX(-50%) scale(1.1);
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+    }
+}
+.scrolling-text {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%) translateX(0%);
+    font-size: 120px;
+    font-weight: 900;
+    color: white;
+    white-space: nowrap;
+    animation: scrollText 25s linear infinite;
+    letter-spacing: -2px;
+    font-stretch: ultra-condensed;
+    font-family: Arial Black, Arial, sans-serif;
+}
+
+@keyframes scrollText {
+    0% { 
+        transform: translateY(-50%) translateX(0%); 
+    }
+    100% { 
+        transform: translateY(-50%) translateX(-100%); 
+    }
+}
+
+/* Wig Rain */
+.wig-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.wig-drop {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('wig.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+    animation: wigFall linear infinite;
+}
+
+@keyframes wigFall {
+    0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(350px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Background gradient overlay */
+.banner-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(0, 82, 255, 0.9) 0%, 
+        rgba(0, 82, 255, 1) 50%, 
+        rgba(0, 82, 255, 0.9) 100%);
+    z-index: 1;
+}
+
+.scrolling-text {
+    z-index: 2;
+}
+
+.wig-rain {
+    z-index: 3;
+}
+
+/* Controls Panel */
+.controls-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.panel-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0052FF;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.control-group {
+    margin-bottom: 20px;
+}
+
+.control-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+}
+
+.control-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+}
+
+.control-input:focus {
+    outline: none;
+    border-color: #0052FF;
+    box-shadow: 0 0 10px rgba(0, 82, 255, 0.3);
+}
+
+.slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    -webkit-appearance: none;
+    margin-bottom: 8px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #0052FF;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #0052FF;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.slider-value {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-weight: 600;
+}
+
+.btn {
+    width: 100%;
+    background: #0052FF;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.btn:hover {
+    background: #0041CC;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 82, 255, 0.3);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.progress-container {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px 0;
+    display: none;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #0052FF;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.status-message {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.8;
+    margin: 10px 0;
+    min-height: 20px;
+}
+
+.file-info {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.canvas-container {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 1300px) {
+    .banner-container {
+        width: 100%;
+        max-width: 900px;
+        height: auto;
+        aspect-ratio: 3/1;
+    }
+    
+    .scrolling-text {
+        font-size: clamp(60px, 12vw, 250px);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .header h1 {
+        font-size: 36px;
+    }
+    
+    .controls-panel {
+        order: -1;
+    }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦱 BASE WIF HAIR GIF Generator</h1>
+            <p>Create your custom animated BASE WIF HAIR banner and export as GIF</p>
+        </div>
+
+        <div class="main-content">
+            <div class="banner-section">
+                <div class="banner-container" id="banner">
+                    <div class="animated-logo" id="animatedLogo"></div>
+                    <div class="scrolling-text" id="scrollingText">BASE WIF HAIR•BASE WIF HAIR•BASE WIF HAIR•BASE WIF HAIR•</div>
+                    <div class="wig-rain" id="wigRain"></div>
+                </div>
+                
+                <div class="status-message" id="statusMessage">
+                    Ready to generate your GIF! Adjust settings and click "Generate GIF"
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <h3 class="panel-title">🎛️ GIF Settings</h3>
+                
+                <div class="control-group">
+                    <label class="control-label">Custom Text</label>
+                    <input type="text" id="customText" class="control-input" 
+                           value="BASE WIF HAIR" placeholder="Enter your text">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Logo Size</label>
+                    <input type="range" id="logoSize" class="slider" min="40" max="300" step="5" value="80">
+                    <div class="slider-value" id="logoSizeValue">80px</div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Text Size</label>
+                    <input type="range" id="textSize" class="slider" min="60" max="250" step="5" value="120">
+                    <div class="slider-value" id="textSizeValue">120px</div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Animation Speed</label>
+                    <input type="range" id="animSpeed" class="slider" min="10" max="40" step="1" value="25">
+                    <div class="slider-value" id="animSpeedValue">25s</div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Wig Rain Intensity</label>
+                    <input type="range" id="wigIntensity" class="slider" min="0.2" max="1.0" step="0.1" value="0.8">
+                    <div class="slider-value" id="wigIntensityValue">80%</div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Background Color</label>
+                    <input type="color" id="bgColor" class="control-input" value="#0052FF">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">GIF Duration (seconds)</label>
+                    <input type="range" id="gifDuration" class="slider" min="5" max="30" step="1" value="10">
+                    <div class="slider-value" id="gifDurationValue">10s</div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">GIF Quality</label>
+                    <select id="gifQuality" class="control-input">
+                        <option value="10">High Quality (Larger file)</option>
+                        <option value="20" selected>Medium Quality</option>
+                        <option value="30">Low Quality (Smaller file)</option>
+                    </select>
+                </div>
+
+                <button class="btn" id="generateBtn" onclick="generateGIF()">
+                    🎬 Generate GIF
+                </button>
+                
+                <button class="btn btn-secondary" id="previewBtn" onclick="togglePreview()">
+                    👁️ Toggle Preview
+                </button>
+                
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <strong>GIF Ready!</strong><br>
+                    <span id="fileSize"></span><br>
+                    <button class="btn" id="downloadBtn" onclick="downloadGIF()">
+                        📥 Download GIF
+                    </button>
+                    <button class="btn btn-secondary" onclick="openGIFInNewTab()">
+                        🔗 Open in New Tab
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden canvas for GIF generation -->
+    <div class="canvas-container">
+        <canvas id="gifCanvas" width="900" height="300"></canvas>
+    </div>
+
+    <!-- GIF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.min.js"></script>
+
+    <script>
+class GIFGenerator {
+    constructor() {
+        this.banner = document.getElementById('banner');
+        this.canvas = document.getElementById('gifCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.wigRain = document.getElementById('wigRain');
+        this.isAnimating = true;
+        this.wigInterval = null;
+        this.generatedGIF = null;
+        
+        this.init();
+    }
+
+    init() {
+        this.setupControls();
+        this.startWigRain();
+        this.loadWigImage();
+        this.loadLogoImage();
+    }
+
+    loadLogoImage() {
+        this.logoImage = new Image();
+        this.logoImage.crossOrigin = 'anonymous';
+        this.logoImage.onload = () => {
+            console.log('Logo image loaded successfully');
+        };
+        this.logoImage.onerror = () => {
+            console.log('Could not load wiflogo.png, using fallback');
+            document.getElementById('animatedLogo').classList.add('fallback');
+            document.getElementById('animatedLogo').textContent = 'WIF';
+            this.createFallbackLogo();
+        };
+        this.logoImage.src = 'wiflogo.png';
+    }
+
+    createFallbackLogo() {
+        const logoCanvas = document.createElement('canvas');
+        const logoCtx = logoCanvas.getContext('2d');
+        logoCanvas.width = 80;
+        logoCanvas.height = 80;
+
+        // Create gradient circle
+        const gradient = logoCtx.createRadialGradient(40, 40, 0, 40, 40, 40);
+        gradient.addColorStop(0, '#FFFFFF');
+        gradient.addColorStop(0.5, '#E6F0FF');
+        gradient.addColorStop(1, '#FFFFFF');
+        
+        logoCtx.fillStyle = gradient;
+        logoCtx.beginPath();
+        logoCtx.arc(40, 40, 35, 0, Math.PI * 2);
+        logoCtx.fill();
+        
+        // Add border
+        logoCtx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        logoCtx.lineWidth = 3;
+        logoCtx.stroke();
+        
+        // Add text
+        logoCtx.fillStyle = '#0052FF';
+        logoCtx.font = '900 24px Arial';
+        logoCtx.textAlign = 'center';
+        logoCtx.textBaseline = 'middle';
+        logoCtx.fillText('WIF', 40, 40);
+
+        this.logoImage = new Image();
+        this.logoImage.src = logoCanvas.toDataURL();
+    }
+
+    loadWigImage() {
+        this.wigImage = new Image();
+        this.wigImage.crossOrigin = 'anonymous';
+        this.wigImage.onload = () => {
+            console.log('Wig image loaded successfully');
+        };
+        this.wigImage.onerror = () => {
+            console.log('Could not load wig.png, creating fallback');
+            this.createFallbackWig();
+        };
+        this.wigImage.src = 'wig.png';
+    }
+
+    createFallbackWig() {
+        const wigCanvas = document.createElement('canvas');
+        const wigCtx = wigCanvas.getContext('2d');
+        wigCanvas.width = 100;
+        wigCanvas.height = 100;
+
+        // Create a simple wig shape
+        wigCtx.fillStyle = '#FFFFFF';
+        wigCtx.beginPath();
+        wigCtx.ellipse(50, 40, 40, 25, 0, 0, Math.PI * 2);
+        wigCtx.fill();
+        
+        // Add some hair strands
+        wigCtx.strokeStyle = '#FFFFFF';
+        wigCtx.lineWidth = 3;
+        wigCtx.lineCap = 'round';
+        
+        for (let i = 0; i < 8; i++) {
+            const x = 20 + i * 7.5;
+            wigCtx.beginPath();
+            wigCtx.moveTo(x, 65);
+            wigCtx.lineTo(x + (Math.random() - 0.5) * 10, 85);
+            wigCtx.stroke();
+        }
+
+        this.wigImage = new Image();
+        this.wigImage.src = wigCanvas.toDataURL();
+    }
+
+    setupControls() {
+        const controls = [
+            { id: 'customText', event: 'input', handler: this.updateText.bind(this) },
+            { id: 'logoSize', event: 'input', handler: this.updateLogoSize.bind(this) },
+            { id: 'textSize', event: 'input', handler: this.updateTextSize.bind(this) },
+            { id: 'animSpeed', event: 'input', handler: this.updateAnimSpeed.bind(this) },
+            { id: 'wigIntensity', event: 'input', handler: this.updateWigIntensity.bind(this) },
+            { id: 'bgColor', event: 'input', handler: this.updateBgColor.bind(this) },
+            { id: 'gifDuration', event: 'input', handler: this.updateGifDuration.bind(this) }
+        ];
+
+        controls.forEach(control => {
+            const element = document.getElementById(control.id);
+            if (element) {
+                element.addEventListener(control.event, control.handler);
+            }
+        });
+    }
+
+    updateLogoSize() {
+        const size = document.getElementById('logoSize').value;
+        document.getElementById('logoSizeValue').textContent = size + 'px';
+        const logo = document.getElementById('animatedLogo');
+        logo.style.width = size + 'px';
+        logo.style.height = size + 'px';
+    }
+
+    updateText() {
+        const text = document.getElementById('customText').value || 'BASE WIF HAIR';
+        const repeatedText = `${text}•${text}•${text}•${text}•`;
+        document.getElementById('scrollingText').textContent = repeatedText;
+    }
+
+    updateTextSize() {
+        const size = document.getElementById('textSize').value;
+        document.getElementById('textSizeValue').textContent = size + 'px';
+        document.getElementById('scrollingText').style.fontSize = size + 'px';
+    }
+
+    updateAnimSpeed() {
+        const speed = document.getElementById('animSpeed').value;
+        document.getElementById('animSpeedValue').textContent = speed + 's';
+        document.getElementById('scrollingText').style.animationDuration = speed + 's';
+    }
+
+    updateWigIntensity() {
+        const intensity = document.getElementById('wigIntensity').value;
+        document.getElementById('wigIntensityValue').textContent = Math.round(intensity * 100) + '%';
+        this.wigIntensity = parseFloat(intensity);
+    }
+
+    updateBgColor() {
+        const color = document.getElementById('bgColor').value;
+        this.banner.style.background = color;
+    }
+
+    updateGifDuration() {
+        const duration = document.getElementById('gifDuration').value;
+        document.getElementById('gifDurationValue').textContent = duration + 's';
+    }
+
+    startWigRain() {
+        this.wigIntensity = 0.8;
+        
+        // Create initial wigs
+        for (let i = 0; i < 6; i++) {
+            setTimeout(() => {
+                this.createWigDrop();
+            }, i * 300);
+        }
+        
+        // Continue creating wigs
+        this.wigInterval = setInterval(() => {
+            if (this.isAnimating && Math.random() < this.wigIntensity) {
+                this.createWigDrop();
+            }
+        }, 800);
+    }
+
+    createWigDrop() {
+        const wigDrop = document.createElement('div');
+        wigDrop.className = 'wig-drop';
+        
+        wigDrop.style.left = Math.random() * 850 + 'px';
+        
+        const size = 45 + Math.random() * 20;
+        wigDrop.style.width = size + 'px';
+        wigDrop.style.height = size + 'px';
+        
+        const duration = 3 + Math.random() * 2;
+        wigDrop.style.animationDuration = duration + 's';
+        wigDrop.style.animationDelay = Math.random() * 0.5 + 's';
+        
+        this.wigRain.appendChild(wigDrop);
+        
+        setTimeout(() => {
+            if (wigDrop.parentNode) {
+                wigDrop.parentNode.removeChild(wigDrop);
+            }
+        }, (duration + 0.5) * 1000);
+    }
+
+    togglePreview() {
+        this.isAnimating = !this.isAnimating;
+        const scrollText = document.getElementById('scrollingText');
+        const wigs = document.querySelectorAll('.wig-drop');
+        
+        if (this.isAnimating) {
+            scrollText.style.animationPlayState = 'running';
+            document.getElementById('animatedLogo').style.animationPlayState = 'running';
+            wigs.forEach(wig => wig.style.animationPlayState = 'running');
+            document.getElementById('previewBtn').textContent = '⏸️ Pause Preview';
+        } else {
+            scrollText.style.animationPlayState = 'paused';
+            document.getElementById('animatedLogo').style.animationPlayState = 'paused';
+            wigs.forEach(wig => wig.style.animationPlayState = 'paused');
+            document.getElementById('previewBtn').textContent = '▶️ Resume Preview';
+        }
+    }
+
+    async generateGIF() {
+        const generateBtn = document.getElementById('generateBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const statusMessage = document.getElementById('statusMessage');
+        
+        generateBtn.disabled = true;
+        generateBtn.textContent = '🎬 Generating...';
+        progressContainer.style.display = 'block';
+        
+        try {
+            const duration = parseInt(document.getElementById('gifDuration').value);
+            const quality = parseInt(document.getElementById('gifQuality').value);
+            
+            statusMessage.textContent = 'Initializing GIF generator...';
+            
+            const gif = new GIF({
+                workers: 2,
+                quality: quality,
+                width: 900,
+                height: 300,
+                workerScript: 'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js'
+            });
+
+            const frameCount = duration * 10; // 10 FPS
+            const frameDelay = 100; // 100ms between frames
+
+            statusMessage.textContent = `Capturing ${frameCount} frames...`;
+
+            for (let i = 0; i < frameCount; i++) {
+                await this.captureFrame(i, frameCount);
+                gif.addFrame(this.canvas, { delay: frameDelay });
+                
+                const progress = ((i + 1) / frameCount) * 100;
+                progressBar.style.width = progress + '%';
+                statusMessage.textContent = `Capturing frame ${i + 1}/${frameCount}...`;
+                
+                // Allow UI to update
+                await new Promise(resolve => setTimeout(resolve, 10));
+            }
+
+            statusMessage.textContent = 'Rendering GIF... This may take a moment...';
+
+            gif.on('finished', (blob) => {
+                this.generatedGIF = blob;
+                const fileSize = (blob.size / 1024 / 1024).toFixed(2);
+                
+                document.getElementById('fileSize').textContent = `Size: ${fileSize} MB`;
+                document.getElementById('fileInfo').style.display = 'block';
+                
+                statusMessage.textContent = 'GIF generated successfully! Click download button below.';
+                generateBtn.disabled = false;
+                generateBtn.textContent = '🎬 Generate GIF';
+                progressContainer.style.display = 'none';
+                
+                // Auto-trigger download in some browsers
+                setTimeout(() => {
+                    if (window.location.protocol === 'file:') {
+                        statusMessage.textContent = 'GIF ready! Click download button (local file hosting detected).';
+                    }
+                }, 500);
+            });
+
+            gif.render();
+
+        } catch (error) {
+            console.error('Error generating GIF:', error);
+            statusMessage.textContent = 'Error generating GIF. Please try again.';
+            generateBtn.disabled = false;
+            generateBtn.textContent = '🎬 Generate GIF';
+            progressContainer.style.display = 'none';
+        }
+    }
+
+    async captureFrame(frameIndex, totalFrames) {
+        return new Promise((resolve) => {
+            // Calculate dynamic background color (cycling through blue shades)
+            const colorProgress = (frameIndex / totalFrames * 6) % 6; // 6 color stops
+            let bgColor;
+            
+            if (colorProgress < 1) {
+                bgColor = this.interpolateColor('#0052FF', '#1E6BFF', colorProgress);
+            } else if (colorProgress < 2) {
+                bgColor = this.interpolateColor('#1E6BFF', '#3D84FF', colorProgress - 1);
+            } else if (colorProgress < 3) {
+                bgColor = this.interpolateColor('#3D84FF', '#5C9DFF', colorProgress - 2);
+            } else if (colorProgress < 4) {
+                bgColor = this.interpolateColor('#5C9DFF', '#3D84FF', colorProgress - 3);
+            } else if (colorProgress < 5) {
+                bgColor = this.interpolateColor('#3D84FF', '#1E6BFF', colorProgress - 4);
+            } else {
+                bgColor = this.interpolateColor('#1E6BFF', '#0052FF', colorProgress - 5);
+            }
+            
+            // Clear canvas with dynamic background
+            this.ctx.fillStyle = bgColor;
+            this.ctx.fillRect(0, 0, 900, 300);
+
+            // Calculate text position for this frame
+            const animSpeed = parseInt(document.getElementById('animSpeed').value);
+            const progress = (frameIndex / totalFrames) * (animSpeed / 10);
+            const textProgress = (progress % 1);
+            const textX = 900 * (1 - textProgress) - 900 * textProgress;
+
+            // Draw centered logo (stationary in center of banner)
+            const logoSize = parseInt(document.getElementById('logoSize').value);
+            const logoX = 450; // Center of 900px banner
+            const logoY = 150 + Math.sin(frameIndex * 0.2) * 8; // Subtle bounce
+            const logoScale = 1 + Math.sin(frameIndex * 0.15) * 0.05; // Gentle scale
+
+            if (this.logoImage) {
+                this.ctx.save();
+                this.ctx.globalAlpha = 1;
+                this.ctx.translate(logoX, logoY);
+                this.ctx.scale(logoScale, logoScale);
+                this.ctx.drawImage(this.logoImage, -logoSize/2, -logoSize/2, logoSize, logoSize);
+                this.ctx.restore();
+            }
+
+            // Draw text
+            const text = document.getElementById('scrollingText').textContent;
+            const fontSize = parseInt(document.getElementById('textSize').value);
+            
+            this.ctx.fillStyle = 'white';
+            this.ctx.font = `900 ${fontSize}px Arial`;
+            this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+            this.ctx.lineWidth = fontSize * 0.02;
+            this.ctx.strokeText(text, textX, 150);
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText(text, textX, 150);
+
+            // Draw wigs (simplified for GIF)
+            if (this.wigImage && this.wigIntensity > 0) {
+                const wigCount = Math.floor(6 * this.wigIntensity);
+                for (let i = 0; i < wigCount; i++) {
+                    const wigX = (i * 150 + frameIndex * 2) % 950 - 50;
+                    const wigY = ((frameIndex * 3 + i * 50) % 400) - 50;
+                    const wigSize = 45 + (i % 3) * 5;
+                    
+                    this.ctx.save();
+                    this.ctx.globalAlpha = 0.8;
+                    this.ctx.translate(wigX + wigSize/2, wigY + wigSize/2);
+                    this.ctx.rotate((frameIndex + i * 30) * 0.1);
+                    this.ctx.drawImage(this.wigImage, -wigSize/2, -wigSize/2, wigSize, wigSize);
+                    this.ctx.restore();
+                }
+            }
+
+            resolve();
+        });
+    }
+
+    interpolateColor(color1, color2, factor) {
+        // Convert hex to RGB
+        const hex2rgb = (hex) => {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        };
+        
+        const rgb2hex = (r, g, b) => {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        };
+        
+        const c1 = hex2rgb(color1);
+        const c2 = hex2rgb(color2);
+        
+        const r = Math.round(c1.r + factor * (c2.r - c1.r));
+        const g = Math.round(c1.g + factor * (c2.g - c1.g));
+        const b = Math.round(c1.b + factor * (c2.b - c1.b));
+        
+        return rgb2hex(r, g, b);
+    }
+
+    downloadGIF() {
+        if (!this.generatedGIF) return;
+
+        try {
+            // Method 1: Direct download (works in most browsers)
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(this.generatedGIF);
+            link.href = url;
+            link.download = `base-wif-hair-banner-${Date.now()}.gif`;
+            
+            // Ensure link is added to DOM for some browsers
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Clean up the URL object
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            
+            document.getElementById('statusMessage').textContent = 'GIF download started!';
+        } catch (error) {
+            console.error('Download failed:', error);
+            
+            // Method 2: Fallback - show GIF for manual save
+            try {
+                const url = URL.createObjectURL(this.generatedGIF);
+                const newWindow = window.open(url, '_blank');
+                
+                if (newWindow) {
+                    document.getElementById('statusMessage').textContent = 'GIF opened in new tab - right-click to save!';
+                } else {
+                    // Method 3: Last resort - create downloadable data URL
+                    const reader = new FileReader();
+                    reader.onload = function() {
+                        const dataUrl = reader.result;
+                        const link = document.createElement('a');
+                        link.href = dataUrl;
+                        link.download = `base-wif-hair-banner-${Date.now()}.gif`;
+                        link.click();
+                    };
+                    reader.readAsDataURL(this.generatedGIF);
+                    document.getElementById('statusMessage').textContent = 'Alternative download method used!';
+                }
+            } catch (fallbackError) {
+                console.error('All download methods failed:', fallbackError);
+                document.getElementById('statusMessage').textContent = 'Download failed. Try generating the GIF again.';
+            }
+        }
+    }
+}
+
+// Global functions
+let gifGenerator;
+
+function generateGIF() {
+    gifGenerator.generateGIF();
+}
+
+function togglePreview() {
+    gifGenerator.togglePreview();
+}
+
+function downloadGIF() {
+    gifGenerator.downloadGIF();
+}
+
+function downloadGIF() {
+    gifGenerator.downloadGIF();
+}
+
+function openGIFInNewTab() {
+    if (gifGenerator.generatedGIF) {
+        const url = URL.createObjectURL(gifGenerator.generatedGIF);
+        const newWindow = window.open(url, '_blank');
+        if (newWindow) {
+            document.getElementById('statusMessage').textContent = 'GIF opened in new tab - right-click to save!';
+        } else {
+            document.getElementById('statusMessage').textContent = 'Pop-up blocked. Please allow pop-ups and try again.';
+        }
+    }
+}
+
+// Initialize
+window.addEventListener('load', () => {
+    gifGenerator = new GIFGenerator();
+});
+    </script>
+</body>
+</html>
